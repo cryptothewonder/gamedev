@@ -64,6 +64,9 @@ local GROUND_SCROLL_SPEED = 60
 
 local BACKGROUND_LOOPING_POINT = 413
 
+-- Pause-state 
+gameIsPaused = false
+
 -- global variable we can use to scroll the map
 scrolling = true
 
@@ -133,6 +136,9 @@ function love.keypressed(key)
     if key == 'escape' then
         love.event.quit()
     end
+    if key == 'p' then
+        gameIsPaused = not gameIsPaused
+  end
 end
 
 --[[
@@ -159,6 +165,10 @@ function love.update(dt)
         backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % BACKGROUND_LOOPING_POINT
         groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) % VIRTUAL_WIDTH
     end
+    if gameIsPaused then
+        -- If the game is paused, set the delta time (dt) to 0 to pause the game
+        dt = 0
+      end
 
     gStateMachine:update(dt)
 
@@ -175,3 +185,6 @@ function love.draw()
     
     push:finish()
 end
+
+-- pause, written by chatgpt
+

@@ -42,11 +42,21 @@ function Bird:collides(pipe)
 end
 
 function Bird:update(dt)
+    if gameIsPaused then
+        -- If the game is paused, set the delta time (dt) to 0 to pause the game
+        dt = 0
+        self.dy = 0
+      end
+
     self.dy = self.dy + GRAVITY * dt
 
     if love.keyboard.wasPressed('space') or love.mouse.wasPressed(1) then
         self.dy = -5
         sounds['jump']:play()
+    end
+    if gameIsPaused then
+        -- If the game is paused, set the delta time (dt) to 0 to pause the game
+        
     end
 
     self.y = self.y + self.dy
